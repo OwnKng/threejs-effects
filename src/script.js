@@ -1,6 +1,8 @@
 import "./style.css"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
+import { fragmentShader, vertexShader } from "./shaders"
+import * as dat from "dat.gui"
 
 //_ Select the canvas
 const canvas = document.querySelector("canvas.webgl")
@@ -15,15 +17,26 @@ const size = {
 const scene = new THREE.Scene()
 
 //_ Create Geometry
-const box = new THREE.BoxBufferGeometry(1, 1, 1)
+const box = new THREE.PlaneGeometry(60, 60, 150, 150)
 
 //_ Create Material
-const material = new THREE.MeshBasicMaterial({
-  color: "teal",
+const material = new THREE.ShaderMaterial({
+  vertexShader,
+  fragmentShader,
+  wireframe: false,
+  transparent: true,
+  blending: THREE.AdditiveBlending,
+  side: THREE.DoubleSide,
+  uniforms: {
+    uTime: { value: 0 },
+    uElevation: { value: 0.5 },
+    uWaves: { value: 0.25 },
+  },
 })
 
 //_ Create mesh
 const mesh = new THREE.Mesh(box, material)
+mesh.rotation.set(-Math.PI / 2, 0, 0)
 scene.add(mesh)
 
 //_ Create camera
@@ -33,7 +46,7 @@ const camera = new THREE.PerspectiveCamera(
   0.01,
   1000
 )
-camera.position.set(2, 2, 2)
+camera.position.set(2, 5, 10)
 scene.add(camera)
 
 //_ Create renderer
@@ -70,6 +83,8 @@ const frame = () => {
   const elpasedTime = clock.getElapsedTime()
 
   controls.update()
+
+  material.uniforms.uTime.value = elpasedTime
 
   renderer.render(scene, camera)
 
