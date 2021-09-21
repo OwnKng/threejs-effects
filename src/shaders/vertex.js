@@ -41,6 +41,8 @@ float getPerlinNoise2d(vec2 P)
 export const vertexShader = /* glsl */ `
     uniform float uTime;
     uniform float uElevation;
+    uniform float uElevationDetail;
+    uniform float uElevationGeneral; 
     uniform float uWaves; 
 
     varying float vElevation;
@@ -56,12 +58,12 @@ export const vertexShader = /* glsl */ `
         elevation += uElevation * valleyStrength;
 
         //_ general elevation
-        elevation += getPerlinNoise2d(_position * 0.1) * 0.8 * (valleyStrength + 0.1);
+        elevation += getPerlinNoise2d(_position * 0.1) * uElevationGeneral * (valleyStrength + 0.1);
 
         //_ smaller details
-        elevation += getPerlinNoise2d(_position * 0.25 + 123.0) * 0.5 * (valleyStrength + 0.1);
+        elevation += getPerlinNoise2d(_position * 0.25 + 123.0) * uElevationDetail * (valleyStrength + 0.1);
 
-        elevation *= 4.0;
+        elevation *= uElevation;
 
         return elevation;
     }

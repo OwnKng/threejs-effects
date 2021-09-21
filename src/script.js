@@ -17,20 +17,23 @@ const size = {
 const scene = new THREE.Scene()
 
 //_ Create Geometry
-const box = new THREE.PlaneGeometry(60, 60, 150, 150)
+const box = new THREE.PlaneGeometry(100, 100, 100, 100)
 
 //_ Create Material
 const material = new THREE.ShaderMaterial({
   vertexShader,
   fragmentShader,
   wireframe: false,
+  side: THREE.DoubleSide,
   transparent: true,
   blending: THREE.AdditiveBlending,
   side: THREE.DoubleSide,
   uniforms: {
     uTime: { value: 0 },
-    uElevation: { value: 0.5 },
-    uWaves: { value: 0.25 },
+    uElevation: { value: 2.5 },
+    uElevationDetail: { value: 0.2 },
+    uElevationGeneral: { value: 2.0 },
+    uWaves: { value: 0.05 },
   },
 })
 
@@ -56,6 +59,7 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(size.width, size.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.setClearColor("#08121C")
 
 //_ Resize events
 window.addEventListener("resize", () => {
@@ -75,6 +79,37 @@ window.addEventListener("resize", () => {
 //_ Add controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+
+//_ Debug
+const gui = new dat.GUI()
+
+gui
+  .add(material.uniforms.uWaves, "value")
+  .min(0)
+  .max(1)
+  .step(0.001)
+  .name("uWaves")
+
+gui
+  .add(material.uniforms.uElevation, "value")
+  .min(0)
+  .max(5)
+  .step(0.001)
+  .name("uElevation")
+
+gui
+  .add(material.uniforms.uElevationDetail, "value")
+  .min(0)
+  .max(5)
+  .step(0.001)
+  .name("uElevationDetail")
+
+gui
+  .add(material.uniforms.uElevationGeneral, "value")
+  .min(0)
+  .max(5)
+  .step(0.001)
+  .name("uElevationGeneral")
 
 //_ Frame function
 const clock = new THREE.Clock()
