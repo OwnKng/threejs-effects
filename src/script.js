@@ -17,7 +17,7 @@ const size = {
 const scene = new THREE.Scene()
 
 //_ Create Geometry
-const box = new THREE.PlaneGeometry(100, 100, 100, 100)
+const box = new THREE.PlaneGeometry(100, 100, 200, 200)
 
 //_ Create Material
 const material = new THREE.ShaderMaterial({
@@ -26,14 +26,13 @@ const material = new THREE.ShaderMaterial({
   wireframe: false,
   side: THREE.DoubleSide,
   transparent: true,
-  blending: THREE.AdditiveBlending,
   side: THREE.DoubleSide,
   uniforms: {
     uTime: { value: 0 },
     uElevation: { value: 2.5 },
-    uElevationDetail: { value: 0.2 },
-    uElevationGeneral: { value: 2.0 },
-    uWaves: { value: 0.05 },
+    uElevationDetail: { value: 0.0 },
+    uElevationGeneral: { value: 2.5 },
+    uWaves: { value: 0.0 },
   },
 })
 

@@ -4,8 +4,8 @@ export const fragmentShader = /* glsl */ `
     void main() {
         float elevation = vElevation * 0.1;
         float alpha = mod(elevation * 4.0, 1.0);
-        alpha = step(0.5, alpha);
+        alpha = step(0.9, alpha);
 
-        gl_FragColor = vec4(elevation, 1.0, 1.0, alpha);
+        gl_FragColor = vec4(alpha, elevation, elevation, 1.0);
     }
 `
