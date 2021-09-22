@@ -17,7 +17,8 @@ const size = {
 const scene = new THREE.Scene()
 
 //_ Create Geometry
-const box = new THREE.PlaneGeometry(200, 200, 600, 600)
+const plane = new THREE.PlaneGeometry(200, 200, 600, 600)
+const sphere = new THREE.IcosahedronGeometry(30, 10)
 
 //_ Create Material
 const material = new THREE.ShaderMaterial({
@@ -25,22 +26,25 @@ const material = new THREE.ShaderMaterial({
   fragmentShader,
   wireframe: false,
   side: THREE.DoubleSide,
-  blending: THREE.AdditiveBlending,
+  // blending: THREE.AdditiveBlending,
   transparent: true,
   side: THREE.DoubleSide,
   uniforms: {
     uTime: { value: 0 },
-    uElevation: { value: 2.5 },
+    uElevation: { value: 1.4 },
     uElevationDetail: { value: 0.0 },
-    uElevationGeneral: { value: 2.5 },
+    uElevationGeneral: { value: 1.8 },
     uWaves: { value: 0.0 },
   },
 })
 
 //_ Create mesh
-const mesh = new THREE.Mesh(box, material)
+const mesh = new THREE.Mesh(plane, material)
 mesh.rotation.set(-Math.PI / 2, 0, 0)
+
+const meshSphere = new THREE.Mesh(sphere, material)
 scene.add(mesh)
+// scene.add(meshSphere)
 
 //_ Create camera
 const camera = new THREE.PerspectiveCamera(

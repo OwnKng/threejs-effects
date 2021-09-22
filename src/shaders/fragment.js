@@ -52,12 +52,11 @@ export const fragmentShader = /* glsl */ `
 
     void main() {
         float elevation = vElevation * 0.1;
-        float alpha = mod(elevation * 4.0, 1.0);
-        float time = sin(uTime) * 0.5 + 0.5;
-        time = time * 0.5 + 0.4;
-        alpha = step(time, alpha);
+        float alpha = mod(elevation * 8.0, 1.0);
+        
+        alpha = step(0.2, alpha);
 
-        vec3 color = hsl2rgb(elevation * 0.2 + 0.5, 0.5, 0.5);
+        vec3 color = hsl2rgb(elevation * 0.5 + 0.5, 0.5, 0.5);
 
         gl_FragColor = vec4(color, alpha);
     }
