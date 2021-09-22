@@ -17,7 +17,7 @@ const size = {
 const scene = new THREE.Scene()
 
 //_ Create Geometry
-const box = new THREE.PlaneGeometry(100, 100, 200, 200)
+const box = new THREE.PlaneGeometry(200, 200, 600, 600)
 
 //_ Create Material
 const material = new THREE.ShaderMaterial({
@@ -25,6 +25,7 @@ const material = new THREE.ShaderMaterial({
   fragmentShader,
   wireframe: false,
   side: THREE.DoubleSide,
+  blending: THREE.AdditiveBlending,
   transparent: true,
   side: THREE.DoubleSide,
   uniforms: {

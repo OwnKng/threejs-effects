@@ -73,7 +73,7 @@ export const vertexShader = /* glsl */ `
 
         float elevation = generateElevation(modelPosition.xz);
 
-        modelPosition.y += elevation;
+        // modelPosition.y += elevation;
 
         vec4 viewPosition = viewMatrix * modelPosition;
         vec4 projectionPosition = projectionMatrix * viewPosition; 
