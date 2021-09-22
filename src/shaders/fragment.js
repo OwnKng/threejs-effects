@@ -47,16 +47,17 @@ const hsl2rgb = /*glsl*/ `
 export const fragmentShader = /* glsl */ `
     varying float vElevation; 
     uniform float uTime;
+    varying vec2 vUv;
+    uniform float uElevationFill; 
 
     ${hsl2rgb}
 
     void main() {
         float elevation = vElevation * 0.1;
-        float alpha = mod(elevation * 8.0, 1.0);
-        
-        alpha = step(0.4, alpha);
+        float alpha = mod(vUv.y * 30.0, 1.0);
+        alpha = step(0.05, alpha);
 
-        vec3 color = hsl2rgb(elevation * 0.5 + 0.5, 0.5, 0.5);
+        vec3 color = hsl2rgb((elevation + 0.5)/1.2, 0.5, 0.5);
 
         gl_FragColor = vec4(color, alpha);
     }

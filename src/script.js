@@ -18,7 +18,6 @@ const scene = new THREE.Scene()
 
 //_ Create Geometry
 const plane = new THREE.PlaneGeometry(200, 200, 600, 600)
-const sphere = new THREE.IcosahedronGeometry(30, 10)
 
 //_ Create Material
 const material = new THREE.ShaderMaterial({
@@ -34,6 +33,7 @@ const material = new THREE.ShaderMaterial({
     uElevation: { value: 1.4 },
     uElevationDetail: { value: 0.0 },
     uElevationGeneral: { value: 1.8 },
+    uElevationFill: { value: 0.2 },
     uWaves: { value: 0.0 },
   },
 })
@@ -42,9 +42,7 @@ const material = new THREE.ShaderMaterial({
 const mesh = new THREE.Mesh(plane, material)
 mesh.rotation.set(-Math.PI / 2, 0, 0)
 
-const meshSphere = new THREE.Mesh(sphere, material)
 scene.add(mesh)
-// scene.add(meshSphere)
 
 //_ Create camera
 const camera = new THREE.PerspectiveCamera(
@@ -114,6 +112,13 @@ gui
   .max(5)
   .step(0.001)
   .name("uElevationGeneral")
+
+gui
+  .add(material.uniforms.uElevationFill, "value")
+  .min(0)
+  .max(1)
+  .step(0.001)
+  .name("uElevationFill")
 
 //_ Frame function
 const clock = new THREE.Clock()

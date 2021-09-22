@@ -38,15 +38,7 @@ float getPerlinNoise2d(vec2 P)
     return 2.3 * n_xy;
 }`
 
-export const vertexShader = /* glsl */ `
-    uniform float uTime;
-    uniform float uElevation;
-    uniform float uElevationDetail;
-    uniform float uElevationGeneral; 
-    uniform float uWaves; 
-
-    varying float vElevation;
-
+const generateElevation = /* glsl */ `
     ${noise}
 
     float generateElevation(vec2 _position)
@@ -67,13 +59,24 @@ export const vertexShader = /* glsl */ `
 
         return elevation;
     }
+`
+
+export const vertexShader = /* glsl */ `
+    uniform float uTime;
+    uniform float uElevation;
+    uniform float uElevationDetail;
+    uniform float uElevationGeneral; 
+    uniform float uWaves; 
+
+    varying float vElevation;
+    varying vec2 vUv;
+
+    ${generateElevation}
     
     void main() {
         vec4 modelPosition = modelMatrix * vec4(position, 1.0); 
 
         float elevation = generateElevation(modelPosition.xz);
-
-        modelPosition.y += elevation;
 
         vec4 viewPosition = viewMatrix * modelPosition;
         vec4 projectionPosition = projectionMatrix * viewPosition; 
@@ -81,5 +84,6 @@ export const vertexShader = /* glsl */ `
         gl_Position = projectionPosition;
 
         vElevation = elevation;
+        vUv = uv;
     }
 `
