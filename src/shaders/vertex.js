@@ -50,7 +50,7 @@ const generateElevation = /* glsl */ `
         elevation += uElevation * valleyStrength;
 
         //_ general elevation
-        elevation += getPerlinNoise2d(_position * 0.1) * uElevationGeneral * (valleyStrength + 0.1);
+        elevation += (getPerlinNoise2d(_position * uIntensity) * uElevationGeneral * (valleyStrength + 0.1)) * sin(uTime * 0.8 + _position.x * 0.05);
 
         //_ smaller details
         elevation += getPerlinNoise2d(_position * 0.25 + 123.0) * uElevationDetail * (valleyStrength + 0.1);
@@ -66,6 +66,7 @@ export const vertexShader = /* glsl */ `
     uniform float uElevation;
     uniform float uElevationDetail;
     uniform float uElevationGeneral; 
+    uniform float uIntensity;
     uniform float uWaves; 
 
     varying float vElevation;
@@ -77,7 +78,7 @@ export const vertexShader = /* glsl */ `
         vec4 modelPosition = modelMatrix * vec4(position, 1.0); 
 
         float elevation = generateElevation(modelPosition.xz);
-        modelPosition.y += elevation + (cos(uTime + modelPosition.x));
+        modelPosition.y += elevation;
 
         vec4 viewPosition = viewMatrix * modelPosition;
         vec4 projectionPosition = projectionMatrix * viewPosition; 

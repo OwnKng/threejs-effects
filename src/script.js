@@ -30,11 +30,12 @@ const material = new THREE.ShaderMaterial({
   side: THREE.DoubleSide,
   uniforms: {
     uTime: { value: 0 },
-    uElevation: { value: 3.0 },
-    uElevationDetail: { value: 0.0 },
-    uElevationGeneral: { value: 1.2 },
+    uIntensity: { value: 0.01 },
+    uElevation: { value: 4.0 },
+    uElevationDetail: { value: 0.2 },
+    uElevationGeneral: { value: 5.0 },
     uElevationFill: { value: 0.0 },
-    uWaves: { value: 0.0 },
+    uWaves: { value: 0.01 },
   },
 })
 
@@ -91,6 +92,13 @@ gui
   .max(1)
   .step(0.001)
   .name("uWaves")
+
+gui
+  .add(material.uniforms.uIntensity, "value")
+  .min(0)
+  .max(0.4)
+  .step(0.0001)
+  .name("uIntensity")
 
 gui
   .add(material.uniforms.uElevation, "value")
