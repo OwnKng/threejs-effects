@@ -30,10 +30,10 @@ const material = new THREE.ShaderMaterial({
   side: THREE.DoubleSide,
   uniforms: {
     uTime: { value: 0 },
-    uElevation: { value: 1.4 },
+    uElevation: { value: 3.0 },
     uElevationDetail: { value: 0.0 },
-    uElevationGeneral: { value: 1.8 },
-    uElevationFill: { value: 0.2 },
+    uElevationGeneral: { value: 1.2 },
+    uElevationFill: { value: 0.0 },
     uWaves: { value: 0.0 },
   },
 })

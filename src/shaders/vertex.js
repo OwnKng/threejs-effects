@@ -77,6 +77,7 @@ export const vertexShader = /* glsl */ `
         vec4 modelPosition = modelMatrix * vec4(position, 1.0); 
 
         float elevation = generateElevation(modelPosition.xz);
+        modelPosition.y += elevation + (cos(uTime + modelPosition.x));
 
         vec4 viewPosition = viewMatrix * modelPosition;
         vec4 projectionPosition = projectionMatrix * viewPosition; 
